@@ -13,8 +13,10 @@ class Visit extends Model
         'platform',
         'browser',
         'ip',
-        'visitable',
-        'visitor',
+        'visitable_id',
+        'visitable_type',
+        'visitor_id',
+        'visitor_type',
     ];
 
     protected $hidden = [

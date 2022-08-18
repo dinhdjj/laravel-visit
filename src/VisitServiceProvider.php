@@ -20,9 +20,4 @@ class VisitServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasMigration('create_visits_table');
     }
-
-    public function packageRegistered(): void
-    {
-        $this->app->bind('visit', fn () => new Visit());
-    }
 }
