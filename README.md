@@ -31,21 +31,76 @@ php artisan vendor:publish --tag="visit-config"
 This is the contents of the published config file:
 
 ```php
+// config for dinhdjj/laravel-visit package
 return [
+
+    /**
+     * Table name for visit logs
+     */
+    'table' => 'visits',
+
+    /**
+     * The model class name that will be used to store visit logs, must be a subclass of \Dinhdjj\Visit\Models\Visit
+     */
+    'model' => Dinhdjj\Visit\Models\Visit::class,
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="visit-views"
 ```
 
 ## Usage
 
+### Use `Visitable` trait
+
+The first thing you need to do is, to use `Visitable` trait.
+
 ```php
-$visit = new Dinhdjj\Visit();
-echo $visit->echoPhrase('Hello, Dinhdjj!');
+class Post extends Model
+{
+    use \Dinhdjj\Visit\Traits\Visitable;
+}
+```
+
+After that, you can use below methods to interact with the visit logs:
+
+```php
+    $post = Post::first();
+
+    $post->visitLogs() // relation to visit logs
+
+    $post->visitLogs // collection of visit logs
+
+    $builder = $post->visitLog(User::first()) // builder visit with user as visitor
+
+    $builder->byIp(); // prevent duplicate visit by ip
+    $builder->byVisitor(); // prevent duplicate visit by visitor
+
+    $builder->interval(60*15) // prevent duplicate visit within 15 minutes, default is 60*15
+
+    $visit = $builder->log(); // create visit to database
+```
+
+### Use `Visitor` trait
+
+The first thing you need to do is, to use `Visitor` trait.
+
+```php
+class User extends Model
+{
+    use \Dinhdjj\Visit\Traits\Visitor;
+}
+```
+
+After that, you can use below methods to interact with the visit logs:
+
+```php
+    $user = Post::first();
+
+    $user->visits() // relation to visit logs
+
+    $post->visits // collection of visit logs
+
+    $builder = $post->visit(Post::first()) // builder visit to post
+
+    // ... same as above
 ```
 
 ## Testing
