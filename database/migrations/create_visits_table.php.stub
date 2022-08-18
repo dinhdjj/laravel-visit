@@ -8,12 +8,23 @@ return new class() extends Migration
 {
     public function up()
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create(config('visit.table'), function (Blueprint $table) {
             $table->id();
 
-            // add fields
+            $table->json('languages');
+            $table->string('device');
+            $table->string('platform');
+            $table->string('browser');
+            $table->ipAddress('ip');
+            $table->nullableMorphs('visitable');
+            $table->nullableMorphs('visitor');
 
             $table->timestamps();
         });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists(config('visit.table'));
     }
 };
