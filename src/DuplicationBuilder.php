@@ -57,6 +57,36 @@ class DuplicationBuilder
     }
 
     /**
+     * Prevent duplicate visits by device.
+     *
+     * @return $this
+     **/
+    public function byDevice(): static
+    {
+        return $this->by('device');
+    }
+
+    /**
+     * Prevent duplicate visits by platform.
+     *
+     * @return $this
+     **/
+    public function byPlatform(): static
+    {
+        return $this->by('platform');
+    }
+
+    /**
+     * Prevent duplicate visits by browser.
+     *
+     * @return $this
+     **/
+    public function byBrowser(): static
+    {
+        return $this->by('browser');
+    }
+
+    /**
      * Prevent duplicate visits x seconds interval.
      *
      * @return $this

@@ -11,6 +11,9 @@ use Jenssegers\Agent\Agent;
  * @method $this by(string $field) Prevent duplicate visits by x field.
  * @method $this byIp() Prevent duplicate visits by ip.
  * @method $this byVisitor() Prevent duplicate visits by visitor.
+ * @method $this byDevice() Prevent duplicate visits by device.
+ * @method $this byPlatform() Prevent duplicate visits by platform.
+ * @method $this byBrowser() Prevent duplicate visits by browser.
  * @method $this interval(int $seconds) seconds to prevent duplicate.
  * @method $this hourly() Prevent duplicate visits by hour.
  * @method $this daily() Prevent duplicate visits by day.

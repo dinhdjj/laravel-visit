@@ -60,6 +60,66 @@ it('can log duplication by visitor', function () {
     assertDatabaseCount('visits', 2);
 });
 
+it('can log duplication by device', function () {
+    testTime()->freeze();
+
+    $visitor = Post::create();
+    $visit = new Visit(request(), $this->post, $visitor);
+    $visit->byDevice();
+    assertDatabaseCount('visits', 0);
+
+    $visit->log();
+    assertDatabaseCount('visits', 1);
+
+    testTime()->addMinutes(14);
+    $visit->log();
+    assertDatabaseCount('visits', 1);
+
+    testTime()->addMinutes(1);
+    $visit->log();
+    assertDatabaseCount('visits', 2);
+});
+
+it('can log duplication by platform', function () {
+    testTime()->freeze();
+
+    $visitor = Post::create();
+    $visit = new Visit(request(), $this->post, $visitor);
+    $visit->byPlatform();
+    assertDatabaseCount('visits', 0);
+
+    $visit->log();
+    assertDatabaseCount('visits', 1);
+
+    testTime()->addMinutes(14);
+    $visit->log();
+    assertDatabaseCount('visits', 1);
+
+    testTime()->addMinutes(1);
+    $visit->log();
+    assertDatabaseCount('visits', 2);
+});
+
+it('can log duplication by browser', function () {
+    testTime()->freeze();
+
+    $visitor = Post::create();
+    $visit = new Visit(request(), $this->post, $visitor);
+    $visit->byBrowser();
+    assertDatabaseCount('visits', 0);
+
+    $visit->log();
+    assertDatabaseCount('visits', 1);
+
+    testTime()->addMinutes(14);
+    $visit->log();
+    assertDatabaseCount('visits', 1);
+
+    testTime()->addMinutes(1);
+    $visit->log();
+    assertDatabaseCount('visits', 2);
+});
+
 it('can custom interval duplicate', function () {
     testTime()->freeze();
 
