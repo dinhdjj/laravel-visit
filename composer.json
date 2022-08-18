@@ -1,10 +1,13 @@
 {
-    "name": "dinhdjj/visit",
+    "name": "dinhdjj/laravel-visit",
     "description": "Package to tracking visits of a given model",
     "keywords": [
         "dinhdjj",
         "laravel",
-        "visit"
+        "visit",
+        "tracking",
+        "laravisit",
+        "visitor"
     ],
     "homepage": "https://github.com/dinhdjj/visit",
     "license": "MIT",
