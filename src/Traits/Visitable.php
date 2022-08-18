@@ -2,7 +2,9 @@
 
 namespace Dinhdjj\Visit\Traits;
 
+use Carbon\Carbon;
 use Dinhdjj\Visit\Visit;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -25,5 +27,22 @@ trait Visitable
     public function visitLog(?Model $visitor = null): Visit
     {
         return new Visit(request(), $this, $visitor);
+    }
+
+    public function scopeOrderByVisitLogsCount(Builder $query, string $direction = 'desc', ?Carbon $from = null, ?Carbon $to = null): Builder
+    {
+        return $query
+        ->withCount([
+            'visitLogs' => function (Builder $query) use ($from, $to): void {
+                $query
+                ->when($from, function (Builder $query) use ($from): void {
+                    $query->where('created_at', '>=', $from);
+                })
+                ->when($to, function (Builder $query) use ($to): void {
+                    $query->where('created_at', '<=', $to);
+                });
+            },
+        ])
+        ->orderBy('visit_logs_count', $direction);
     }
 }
